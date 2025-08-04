@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/favicon.ico" type="image/icon type">
+    <title>Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            background-color: white;
+            color: black;
+        }
+
+        body.dark-mode {
+            background-color: black;
+            color: white;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(42, 41, 41, 0.2);
+        }
+
+        .navbar a {
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: inherit;
+        }
+
+        .navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        .logout-container {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: black;
+        }
+
+        body.light-mode .logout-container {
+            background-color: black;
+            color: white;
+        }
+
+        body.dark-mode .logout-container {
+            background-color: white;
+            color: black;
+        }
+
+        .logout-container:hover {
+            opacity: 0.8;
+        }
+
+        /* Slideshow Container Styling */
+        .slideshow-container {
+            max-width: 80%;
+            position: relative;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        /* Slide Styling */
+        .slides {
+            display: none;
+            position: relative;
+            width: 80%;  /* Reduce the width of the image */
+            margin: 0 auto; /* Center the image */
+            height: 400px; /* Adjust height for a more balanced look */
+            object-fit: cover; /* Ensures image fits the container without stretching */
+        }
+
+        /* Fade In Animation */
+        .fade {
+            animation: fadeEffect 2s ease-in-out;
+        }
+
+        @keyframes fadeEffect {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Text Styling for Slides */
+        .slide-text {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            max-width: 80%;
+            text-align: center;
+            line-height: 1.6;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black for dark text */
+            color: white;
+        }
+
+        /* Light Mode Text Styling */
+        body.light-mode .slide-text {
+            background-color: rgba(255, 255, 255, 0.6); /* Semi-transparent white for light mode */
+            color: black;
+        }
+
+        /* Text Style Adjustments */
+        body.light-mode .slide-text {
+            color: black; /* For better contrast in light mode */
+        }
+
+        /* Mode Toggle Button */
+        #toggle-mode-btn {
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            border-radius: 50%;
+            z-index: 10;
+            background-color: transparent;
+        }
+
+        #toggle-mode-btn img {
+            width: 30px;
+            height: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        #toggle-mode-btn:hover img {
+            transform: scale(1.1);
+        }
+
+        body.light-mode #toggle-mode-btn {
+            color: black;
+        }
+
+        body.dark-mode #toggle-mode-btn {
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 -4px 8px rgba(94, 87, 87, 0.313);
+        }
+
+        .section {
+            padding: 60px 20px;
+            margin: 20px auto;
+            text-align: justify;
+            max-width: 900px;
+        }
+
+        .section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .section p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        #contact p {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+    <!-- Logo -->
+    <div class="logo">
+        <img src="images/logo.png" alt="UniFix Logo" style="width: 150px; margin-top: 20px;">
+    </div>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="#about">ABOUT US</a>
+        <a href="#contact">CONTACT US</a>
+        <a href="admin.html">ADMIN DASHBOARD</a>
+        <button id="logout-btn" class="logout-container" onclick="logout()">LOGOUT</button>
+    </div>
+
+    <!-- Toggle Mode Button -->
+    <button id="toggle-mode-btn" onclick="toggleMode()">
+        <img id="mode-icon" src="images/lightlogo.png" alt="Mode Icon" style="width: 30px; height: 30px;">
+    </button>
+
+    <div class="slideshow-container">
+        <!-- Slide 1 -->
+        <div class="slides fade">
+            <img src="images/slide1.png" alt="Efficient Monitoring" style="width:100%;">
+            <div class="slide-text">
+                <strong>Efficient Monitoring:</strong> UniFix offers real-time monitoring and detection of uniform violations, ensuring swift and accurate tracking for school administrators.
+            </div>
+        </div>
+    
+        <!-- Slide 2 -->
+        <div class="slides fade">
+            <img src="images/slide2.png" alt="Seamless Management" style="width:100%;">
+            <div class="slide-text">
+                <strong>Seamless Management:</strong> With automated reporting and customizable dashboards, managing student compliance is now faster and more streamlined than ever before.
+            </div>
+        </div>
+    
+        <!-- Slide 3 -->
+        <div class="slides fade">
+            <img src="images/slide3.png" alt="Smart Reporting" style="width:100%;">
+            <div class="slide-text">
+                <strong>Smart Reporting:</strong> Gain valuable insights with detailed analytics and customizable reports to help institutions maintain uniform discipline.
+            </div>
+        </div>
+    </div>
+    
+    <!-- About Section -->
+    <div id="about" class="section">
+        <h2>About Us</h2>
+        <p>
+            UniFix is an advanced platform designed to help schools and colleges efficiently monitor and manage uniform compliance.
+            By leveraging AI-driven technology, we automate the detection and reporting of uniform violations, saving valuable time and resources.
+        </p>
+        <p>
+            Our mission is to support educational institutions in maintaining discipline while reducing the manual workload of staff.
+            With features like real-time notifications, analytics, and a user-friendly interface, UniFix ensures smooth implementation at all levels of education.
+        </p>
+        <p>
+            We are committed to fostering a positive learning environment by simplifying uniform compliance checks and enabling educators to focus on what truly matters: teaching and learning.
+        </p>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contact" class="section">
+        <h2>Contact Us</h2>
+        <p>Email: unifix10@gmail.com</p>
+        <p>Phone: 9944332211</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>By: Aslah, Rohith, Sangeeth, Sayanth</p>
+        <p>© 2025 UniFix. All rights reserved.</p>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+        }
+
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("slides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 3000);
+        }
+
+        function toggleMode() {
+            let body = document.body;
+            body.classList.toggle('light-mode');
+            body.classList.toggle('dark-mode');
+
+            let modeIcon = document.getElementById("mode-icon");
+            let logo = document.querySelector(".logo img");
+
+            if (body.classList.contains('light-mode')) {
+                modeIcon.src = "images/darklogo.png"; // Path to your sun logo
+                logo.src = "images/logo1.png"; // Light mode logo
+            } else {
+                modeIcon.src = "images/lightlogo.png"; // Path to your moon logo
+                logo.src = "images/logo.png"; // Dark mode logo
+            }
+        }
+
+    </script>
+</body>
+
+</html>

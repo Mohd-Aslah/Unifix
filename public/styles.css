@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+  }
+  
+  /* Logo styling */
+  .logo {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .logo img {
+    width: 150px;
+    height: auto;
+  }
+  
+  /* Login container */
+  .login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #1a1a1a; /* Slightly lighter black for contrast */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff; /* White text */
+  }
+  
+  form input {
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    background: transparent;
+    color: #fff;
+  }
+  
+  form input::placeholder {
+    color: #aaa; /* Lighter text for placeholders */
+  }
+  
+  form button {
+    padding: 10px;
+    background: #fff; /* White button */
+    color: #000; /* Black text */
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  form button:hover {
+    background: #e6e6e6; /* Slightly darker white */
+  }
+  
+  a {
+    color: #fff;
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+    text-decoration: underline;
+  }
+  
+  a:hover {
+    color: #aaa; /* Slightly lighter hover effect */
+  }
+/* Footer styling */
+footer {
+  margin-top: 30px; /* Reduce space */
+  font-size: 13px;
+  color: #aaa;
+  text-align: center; /* Center the text */
+}
+
+footer p {
+  display: inline; /* Make text and link stay together */
+}
+
+footer a {
+  display: inline; /* Keep "Register here" on the same line */
+  margin-left: 5px; /* Add slight spacing */
+  text-decoration: underline;
+  color: #fff;
+}
+
+footer a:hover {
+  color: #aaa; /* Lighter color on hover */
+}
+
+  /* Table styling */
+  table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    color: #fff;
+  }
+  
+  table th, table td {
+    border: 1px solid #fff;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  table th {
+    background: #333; /* Darker black for header */
+  }
+  
+  table tr:nth-child(even) {
+    background: #1a1a1a; /* Slightly lighter for row contrast */
+  }
+  
+  button#download-report {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  button#download-report:hover {
+    background: #e6e6e6;
+  }
+
+  .upload-button {
+    font-size: 14px; /* Adjust font size */
+    padding: 10px 20px; /* Control button size */
+    border: none;
+    border-radius: 4px;
+    background-color: white; 
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .upload-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+

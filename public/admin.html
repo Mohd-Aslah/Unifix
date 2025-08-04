@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="icon" href="images/favicon.ico" type="image/icon type">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* General Styling */
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      color: #fff;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 250px 1fr;
+    }
+
+    /* Home Icon */
+    .home-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      z-index: 1000;
+    }
+    .home-icon:hover {
+      color: #ccc;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background-color: #1a1a1a;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .sidebar h2 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 30px;
+      padding-top: 20px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+    .sidebar ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      display: block;
+      padding: 12px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    .sidebar ul li a:hover {
+      background-color: #444;
+    }
+    .sidebar ul li a i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 20px;
+      overflow-x: auto;
+    }
+
+    /* Table Styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    table th, table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: none;
+    }
+    table th {
+      background-color: #444;
+      color: #fff;
+      position: sticky;
+      top: 0;
+    }
+    table tbody tr:nth-child(even) {
+      background-color: #333;
+    }
+    table tbody tr:nth-child(odd) {
+      background-color: #282828;
+    }
+    table tbody tr:hover {
+      background-color: #444;
+    }
+
+    /* Image in table */
+    .table-image {
+      max-width: 100px;
+      max-height: 80px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    /* Actions Column */
+    .actions-cell {
+      display: flex;
+      gap: 10px;
+    }
+    .action-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .download-btn {
+      background-color: rgba(76, 175, 80, 0.2);
+      color: #4CAF50;
+    }
+    .download-btn:hover {
+      background-color: rgba(76, 175, 80, 0.4);
+    }
+    .delete-btn {
+      background-color: rgba(255, 77, 77, 0.2);
+      color: #ff4d4d;
+    }
+    .delete-btn:hover {
+      background-color: rgba(255, 77, 77, 0.4);
+    }
+
+    /* Buttons */
+    .button {
+      background-color: #000;
+      color: #fff;
+      padding: 12px 20px;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      text-align: center;
+      display: inline-block;
+      margin: 10px 0;
+    }
+    .button:hover {
+      background-color: #fff;
+      color: #000;
+    }
+
+    /* Upload Section */
+    .upload-container {
+      width: 80%;
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 25px;
+      background: #1a1a1a;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      color: #fff;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #555;
+      border-radius: 5px;
+      background-color: #444;
+      color: white;
+      font-size: 14px;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: white;
+    }
+    select.form-control {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 12px;
+    }
+
+    /* Thumbnail Preview */
+    .thumbnail-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 15px 0;
+    }
+    .thumbnail-item {
+      position: relative;
+      width: 100px;
+      height: 100px;
+    }
+    .thumbnail-preview {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+      border: 1px solid #555;
+    }
+    .close-button {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .close-button:hover {
+      background: #ff1a1a;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      .upload-container {
+        width: 95%;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Home Icon -->
+  <i class="fas fa-home home-icon" onclick="window.location.href='home.html'"></i>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2><i class="fas fa-user-shield"></i> Admin Panel</h2>
+    <ul>
+      <li><a href="#violations"><i class="fas fa-list"></i> View Violations</a></li>
+      <li><a href="#upload"><i class="fas fa-upload"></i> Upload Uniform</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Violations Section -->
+    <div id="violations">
+      <h1 style="font-size: 25px;"><i class="fas fa-list"></i> Violations</h1>
+      <table id="violations-table">
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Timestamp</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows will be inserted here  -->
+        </tbody>
+      </table>
+      <button id="download-csv" class="button"><i class="fas fa-file-csv"></i> Download CSV</button>
+    </div>
+
+    <!-- Upload Section -->
+    <div id="upload" style="display: none;">
+      <h1 style="font-size: 25px;"><i class="fas fa-upload"></i> Upload Uniform Image</h1>
+      <div class="upload-container">
+        <form id="upload-form">
+          <div class="form-group">
+            <label for="college-name">College Name</label>
+            <select id="college-name" class="form-control" required>
+              <option value="">-- Select College --</option>
+              <option value="College of Engineering Thalassery">College of Engineering Thalassery</option>
+              <option value="Government Engineering College Kannur">Government Engineering College Kannur</option>
+              <option value="College of Engineering Vadakara">College of Engineering Vadakara</option>
+              <option value="Other">Other</option>
+            </select>
+            <input type="text" id="other-college" class="form-control" style="display: none; margin-top: 10px;" placeholder="Specify College Name">
+          </div>
+          
+          <div class="form-group">
+            <label for="degree-name">Degree Name</label>
+            <select id="degree-name" class="form-control" required>
+              <option value="">-- Select Degree --</option>
+              <option value="BTech">BTech</option>
+              <option value="MTech">MTech</option>
+              <option value="MBA">MBA</option>
+              <option value="MCA">MCA</option>
+              <option value="Other">Other</option>
+            </select>
+            <input type="text" id="other-degree" class="form-control" style="display: none; margin-top: 10px;" placeholder="Specify Degree Name">
+          </div>
+          
+          <div class="form-group">
+            <label for="uniform-image">Uniform Images</label>
+            <input type="file" id="uniform-image" class="form-control" accept="image/*" multiple required>
+            <div id="thumbnail-container" class="thumbnail-container"></div>
+          </div>
+          <div id="image-requirement" style="margin-top: 10px; text-align: center;">
+            <p style="color: gray;">Ensure the image clearly shows a proper uniform (shirt and pants).</p>
+          </div>
+          <button id="upld" type="submit" class="button"><i class="fas fa-upload"></i> Upload</button>
+        </form>
+        <p id="upload-status" style="margin-top: 15px;"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Unauthorized");
+        window.location.href = "login.html";
+        return;
+      }
+
+      // Show violations section by default
+      document.querySelector("#violations").style.display = "block";
+
+      // Fetch and display violations
+      function fetchViolations() {
+        fetch('http://localhost:5000/violations', {
+          headers: { 
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+        })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const tableBody = document.querySelector('#violations-table tbody');
+          tableBody.innerHTML = ''; // Clear existing rows
+          
+          data.forEach((violation) => {
+            const row = document.createElement('tr');
+            const date = new Date(violation.date);
+            const formattedDate = date.toLocaleString();
+            
+            row.innerHTML = `
+              <td>${violation.student_id || 'N/A'}</td>
+              <td>${violation.name || 'N/A'}</td>
+              <td>
+                ${violation.uniform_status_image ? 
+                  `<img src="data:image/jpeg;base64,${violation.uniform_status_image}" 
+                       alt="Violation Image" 
+                       class="table-image">` : 
+                  'No Image'}
+              </td>
+              <td>${formattedDate}</td>
+              <td class="actions-cell">
+                <button class="action-btn download-btn" data-id="${violation._id}" data-studentid="${violation.student_id}" data-name="${violation.name}"  data-image="${violation.uniform_status_image}" data-date="${violation.date}" data-face_score="${violation.face_score}" title="Download PDF">
+                  <i class="fas fa-download"></i>
+                </button>
+                <button class="action-btn delete-btn" data-id="${violation._id}" title="Delete">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            `;
+            tableBody.appendChild(row);
+          });
+        })
+        .catch((error) => {
+          console.error('Error fetching violations:', error);
+          alert('Error fetching violations');
+        });
+      }
+
+      // Initial fetch
+      fetchViolations();
+
+      // Toggle sections (Violations & Upload)
+      document.querySelectorAll(".sidebar ul li a").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          document.querySelectorAll(".main-content > div").forEach((section) => {
+            section.style.display = "none";
+          });
+          document.querySelector(link.getAttribute("href")).style.display = "block";
+        });
+      });
+
+      // Handle "Other" selection for college and degree
+      document.getElementById('college-name').addEventListener('change', function() {
+        const otherCollegeInput = document.getElementById('other-college');
+        otherCollegeInput.style.display = this.value === 'Other' ? 'block' : 'none';
+        if (this.value !== 'Other') otherCollegeInput.value = '';
+        otherCollegeInput.required = this.value === 'Other';
+      });
+
+      document.getElementById('degree-name').addEventListener('change', function() {
+        const otherDegreeInput = document.getElementById('other-degree');
+        otherDegreeInput.style.display = this.value === 'Other' ? 'block' : 'none';
+        if (this.value !== 'Other') otherDegreeInput.value = '';
+        otherDegreeInput.required = this.value === 'Other';
+      });
+
+      // Generate PDF (client-side)
+      function generatePdf(studentId, name,  timestamp, imageUrl, face_score) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        // Add logo
+        const logo = new Image();
+        logo.src = "images/logo1.png";
+        
+        logo.onload = () => {
+          doc.addImage(logo, "PNG", 75, 10, 50, 20);
+          
+          // Report title
+          doc.setFont("helvetica", "bold");
+          doc.setFontSize(18);
+          doc.text("Uniform Violation Report", 105, 40, { align: "center" });
+          
+          // Horizontal line
+          doc.setLineWidth(0.5);
+          doc.line(20, 45, 190, 45);
+          
+          // Violation details
+          doc.setFont("helvetica", "normal");
+          doc.setFontSize(12);
+          
+          const date = new Date(timestamp);
+          const formattedDate = `Date: ${date.toLocaleDateString()} Time: ${date.toLocaleTimeString()}`;
+          
+          doc.text(`Student ID: ${studentId || 'N/A'}`, 20, 60);
+          doc.text(`Student Name: ${name || 'N/A'}` ,20, 70);
+          doc.text(`Face Score: ${face_score*100|| 'N/A'}%` ,20, 80);
+          doc.text(formattedDate, 20, 90);
+          doc.text("Violation: Improper Uniform", 20, 100);
+          doc.text("Fine Amount: 50 Rs", 20, 110);
+          
+          // Add image if available
+          if (imageUrl) {
+            try {
+              const img = new Image();
+              img.src = imageUrl;
+              
+              img.onload = () => {
+                doc.addImage(img, "JPEG", 20, 120, 80, 60);
+                doc.save(`violation_${studentId || 'report'}.pdf`);
+              };
+              
+              img.onerror = () => {
+                doc.text("Image failed to load", 20, 120);
+                doc.save(`violation_${studentId || 'report'}.pdf`);
+              };
+            } catch (e) {
+              doc.text("Image not available", 20, 120);
+              doc.save(`violation_${studentId || 'report'}.pdf`);
+            }
+          } else {
+            doc.text("No image available", 20, 120);
+            doc.save(`violation_${studentId || 'report'}.pdf`);
+          }
+        };
+      }
+
+      // Download PDF for a violation (client-side generation)
+      document.addEventListener("click", (e) => {
+        if (e.target.closest(".download-btn")) {
+          const button = e.target.closest(".download-btn");
+          const studentId = button.dataset.studentid;
+          const name = button.dataset.name;
+          const imageUrl = button.dataset.image ? `data:image/jpeg;base64,${button.dataset.image}` : null;
+          const timestamp = button.dataset.date;
+          const face_score=button.dataset.face_score;
+          
+          generatePdf(studentId, name, timestamp, imageUrl,face_score);
+        }
+      });
+
+      // Delete violation
+      document.addEventListener("click", async (e) => {
+        if (e.target.closest(".delete-btn")) {
+          const button = e.target.closest(".delete-btn");
+          const violationId = button.dataset.id;
+          
+          if (confirm("Are you sure you want to delete this violation?")) {
+            try {
+              const response = await fetch(`http://localhost:5000/violations/${violationId}`, {
+                method: "DELETE",
+                headers: { 
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json'
+                }
+              });
+              
+              if (response.ok) {
+                fetchViolations(); // Refresh the table
+                alert("Violation deleted successfully");
+              } else {
+                const error = await response.json();
+                throw new Error(error.error || 'Failed to delete violation');
+              }
+            } catch (error) {
+              console.error("Error deleting violation:", error);
+              alert(error.message || "Error deleting violation");
+            }
+          }
+        }
+      });
+
+      // Download all violations as CSV 
+      document.getElementById("download-csv").addEventListener("click", async () => {
+        try {
+          const response = await fetch('http://localhost:5000/violations', {
+            headers: { 
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+          });
+          
+          if (!response.ok) {
+            throw new Error('Failed to fetch violations');
+          }
+          
+          const data = await response.json();
+          let csvContent = "Student ID,Name, Face Score,Timestamp\n"; // Removed Image column
+          
+          data.forEach((violation) => {
+            const date = new Date(violation.date);
+            const formattedDate = date.toLocaleString();
+            
+            // Escape quotes and wrap in quotes to handle commas in data
+            const studentId = `"${(violation.student_id || 'N/A').toString().replace(/"/g, '""')}"`;
+            const name = `"${(violation.name || 'N/A').toString().replace(/"/g, '""')}"`;
+            const face_score = `"${(violation.face_score*100 || 'N/A').toString().replace(/"/g, '""')}%"`;
+            const timestamp = `"${formattedDate.replace(/"/g, '""')}"`;
+            
+            csvContent += `${studentId},${name},${face_score},${timestamp}\n`;
+          });
+
+          const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = `violations_${new Date().toISOString().split('T')[0]}.csv`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        } catch (error) {
+          console.error('Error generating CSV:', error);
+          alert('Error generating CSV: ' + error.message);
+        }
+      });
+
+      // Image Preview and Upload Handling
+      const uploadForm = document.getElementById("upload-form");
+      const uploadStatus = document.getElementById("upload-status");
+      const thumbnailContainer = document.getElementById("thumbnail-container");
+      const fileInput = document.getElementById("uniform-image");
+
+      // Store the files for upload
+      let selectedFiles = [];
+
+      fileInput.addEventListener("change", function(event) {
+        thumbnailContainer.innerHTML = "";
+        selectedFiles = Array.from(event.target.files);
+        
+        if (selectedFiles.length > 0) {
+          selectedFiles.forEach((file, index) => {
+            // Check if file is an image
+            if (!file.type.match('image.*')) {
+              return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              const thumbnailItem = document.createElement("div");
+              thumbnailItem.classList.add("thumbnail-item");
+              thumbnailItem.dataset.index = index;
+
+              const img = document.createElement("img");
+              img.src = e.target.result;
+              img.classList.add("thumbnail-preview");
+
+              const closeButton = document.createElement("button");
+              closeButton.classList.add("close-button");
+              closeButton.innerHTML = "×";
+              closeButton.onclick = (e) => {
+                e.stopPropagation();
+                thumbnailItem.remove();
+                // Remove the file from selectedFiles array
+                selectedFiles.splice(index, 1);
+                // Update the file input (this is tricky because we can't directly set files)
+                updateFileInput();
+              };
+
+              thumbnailItem.appendChild(img);
+              thumbnailItem.appendChild(closeButton);
+              thumbnailContainer.appendChild(thumbnailItem);
+            };
+            reader.readAsDataURL(file);
+          });
+        }
+      });
+
+      // Helper function to update the file input after removing thumbnails
+      function updateFileInput() {
+        const dataTransfer = new DataTransfer();
+        selectedFiles.forEach(file => dataTransfer.items.add(file));
+        fileInput.files = dataTransfer.files;
+      }
+
+      // Handle Image Upload
+      uploadForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        let collegeName = document.getElementById("college-name").value;
+        if (collegeName === 'Other') {
+          collegeName = document.getElementById("other-college").value;
+          if (!collegeName.trim()) {
+            alert("Please specify college name");
+            return;
+          }
+        }
+        
+        let degreeName = document.getElementById("degree-name").value;
+        if (degreeName === 'Other') {
+          degreeName = document.getElementById("other-degree").value;
+          if (!degreeName.trim()) {
+            alert("Please specify degree name");
+            return;
+          }
+        }
+
+        if (selectedFiles.length === 0) {
+          alert("Please select at least one file to upload");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("collegeName", collegeName);
+        formData.append("degreeName", degreeName);
+        selectedFiles.forEach((file) => {
+          formData.append("images", file);
+        });
+
+        uploadStatus.textContent = "Uploading images...";
+        uploadStatus.style.color = "#4CAF50";
+
+        try {
+          const response = await fetch("http://localhost:5000/upload-uniform", {
+            method: "POST",
+            headers: { 
+              'Authorization': `Bearer ${token}`
+            },
+            body: formData
+          });
+
+          if (response.ok) {
+            uploadStatus.textContent = "Images uploaded successfully!";
+            uploadStatus.style.color = "#4CAF50";
+            // Reset everything
+            fileInput.value = "";
+            thumbnailContainer.innerHTML = "";
+            selectedFiles = [];
+            document.getElementById("college-name").value = "";
+            document.getElementById("degree-name").value = "";
+            document.getElementById("other-college").value = "";
+            document.getElementById("other-degree").value = "";
+            document.getElementById("other-college").style.display = "none";
+            document.getElementById("other-degree").style.display = "none";
+          } else {
+            const error = await response.json();
+            throw new Error(error.error || 'Failed to upload images');
+          }
+        } catch (error) {
+          console.error("Upload error:", error);
+          uploadStatus.textContent = error.message || "An error occurred while uploading.";
+          uploadStatus.style.color = "#ff4d4d";
+        }
+      });
+    });
+  </script>
+</body>
+</html> 

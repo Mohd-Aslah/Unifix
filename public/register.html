@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="icon" href="images\favicon.ico" type="image/icon type">
+    <link rel="stylesheet" href="r.css">
+</head>
+<body>
+  <div class="logo">
+    <img src="images\logo.png" alt="Admin Logo">
+  </div>
+    <div class="registration-container">
+        <h2>Register</h2>
+        <form action="/register" method="POST">
+          <input type="text" id="username" name="username" placeholder="Username" required>
+          <input type="email" id="email" name="email" placeholder="Email" required>
+          <input type="password" id="password" name="password" placeholder="Password" required>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <footer>
+            <p>Already have an account? <a href="login.html">Login here</a></p>
+        </footer>
+    </div>
+    <script>
+        document.querySelector('form').addEventListener('submit', async  (e) => {
+          e.preventDefault();
+      
+          const username = document.getElementById('username').value;
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+      
+          try {
+            const response = await fetch('http://localhost:5000/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username, email, password }),
+            });
+      
+            const data = await response.json();
+            if (response.ok) {
+              alert(data.message);
+              window.location.href = 'login.html';
+            } else {
+              alert(data.error);
+            }
+          } catch (error) {
+            alert('Error registering user');
+          }
+        });
+      </script>      
+
+</body>
+</html>
