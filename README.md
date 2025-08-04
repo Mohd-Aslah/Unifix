@@ -1,18 +1,26 @@
-# Unifix 🎓👕
+# Unifix 🎓
 
-**Unifix** is a uniform compliance detection system for educational institutions.  
-Built with HTML, CSS, JavaScript, Node.js, and MongoDB.
+Unifix is an automated uniform compliance detection system for educational institutions.
 
 ## Features
-- Admin login
-- Image upload and compliance check
-- Dashboard to view results
-- Integration with ETLAB
 
-## Tech Stack
+- Real-time image classification using YOLOv5
+- Integrated with ETLAB for fines and reports
+- Secure login system
+- Admin dashboard for uploads and tracking
+- Organizer module for event handling
+
+## Technologies
+
 - HTML, CSS, JavaScript
-- Node.js + Express
+- Node.js, Express
 - MongoDB
+- Machine Learning (YOLOv5)
+
+## Live Demo
+
+[Click here to view the site](https://mohd-aslah.github.io/Unifix/)
+
 
 ## How to Run
 ```bash
